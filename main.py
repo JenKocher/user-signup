@@ -88,10 +88,10 @@ class Signup(webapp2.RequestHandler):
         verify             = self.request.get('verify')
         email              = self.request.get('email')
 
-        escaped_username   = cgi.escape(username)
-        escaped_password   = cgi.escape(password)
-        escaped_verify     = cgi.escape(verify)
-        escaped_email      = cgi.escape(email)
+        escaped_username   = cgi.escape(username, quote=True)
+        escaped_password   = cgi.escape(password, quote=True)
+        escaped_verify     = cgi.escape(verify, quote=True)
+        escaped_email      = cgi.escape(email, quote=True)
 
         username_error_msg = ""
         password_error_msg = ""
@@ -122,7 +122,7 @@ class Signup(webapp2.RequestHandler):
 class Welcome(webapp2.RequestHandler):
     def get(self):
         username = self.request.get('username')
-        escaped_username = cgi.escape(username)
+        escaped_username = cgi.escape(username, quote=True)
         if valid_username(escaped_username):
             content=build_welcome_page(escaped_username)
             self.response.write(content)
